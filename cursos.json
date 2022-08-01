@@ -1,0 +1,17 @@
+{
+    "cursos":
+        [
+            {
+                "id": 1,
+                "nombre": "Matemáticas",
+                "tipo": "Teórico",
+                "creditos": 2
+            },
+            {
+                "id": 2,
+                "nombre": "Lógica",
+                "tipo": "Teórico",
+                "creditos": 2
+            }
+        ]  
+  }
