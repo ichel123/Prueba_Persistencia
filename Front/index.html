@@ -1,0 +1,91 @@
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="reportes.js"></script>
+    <script src="ingresoDatos.js"></script>
+  </head>
+  <body>
+    <div class="align-middle" role="banner">
+    
+      <h1>Gestor Universitario</h1>
+    </div>
+    
+    
+    <div class="content" role="main">
+    
+      <div class="card highlight-card card-small">
+  
+      <div class="div-botones">
+        <button style="margin: 10px" class="btn btn-success" onclick="verEstudiantes()">Ver estudiantes</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verCursos()">Ver cursos</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroEstud()">Agregar estudiantes</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroCurso()">Agregar Cursos</button>
+      </div>
+      <div class="contenedor-tabla" >
+        <table class="" id='tablaEstudiantes' style="display: none;">
+          <tr>
+              <th>NOMBRES</th>
+              <th>APELLIDOS</th>
+              <th>CODIGO</th>
+          </tr>
+          <tbody id="cuerpoTablaEstudiantes">
+          </tbody>
+        </table>
+        <table class="" id='tablaCursos' style="display: none;">
+          <tr>
+              <th>NOMBRES</th>
+              <th>TIPO</th>
+              <th>CRÉDITOS</th>
+          </tr>
+          <tbody id="cuerpoTablaCursos">
+          </tbody>
+        </table>
+        <form id="aggEstudiante" style="display: none;">
+            <div class="form-group">
+              <label for="nombres">Nombres</label>
+              <input type="text" class="form-control" id="nombres" placeholder="Ingrese nombres" required pattern="\S(.*\S)?>
+              <label for="apellidos">Apellidos</label>
+              <input type="text" class="form-control" id="apellidos" placeholder="Ingrese apellidos" required pattern="\S(.*\S)?>
+              <label for="codigo">Código</label>
+              <input type="text" class="form-control" id="codigo" placeholder="Ingrese código">
+              <br>
+            </div>
+            <button type="button" class="btn btn-success" onclick="agregarEstudiante()">Registrar</button>
+        </form>
+        <form id="aggCurso" style="display: none;">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Cálculo Integral" required pattern="\S(.*\S)?>
+            <br>
+            <label for="tipoCurso">Tipo de curso</label>
+            <select name="tipoCurso" id="tipoCurso">
+              <option value="Teórico">Teórico</option>
+              <option value="Teórico-Práctico">Teórico-Práctico</option>
+            </select>
+            <br><br>
+            <label for="creditos">Número de créditos</label>
+            <select name="creditos" id="creditos">
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+            <br><br>
+          </div>
+          <button type="button" class="btn btn-success" onclick="agregarCurso()">Registrar</button>
+        </form>
+      </div>
+      <footer>
+          
+      </footer>
+    
+    </div>
+  </body>
+</html>
+  
