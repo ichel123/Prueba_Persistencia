@@ -26,8 +26,11 @@
       <div class="div-botones">
         <button style="margin: 10px" class="btn btn-success" onclick="verEstudiantes()">Ver estudiantes</button>
         <button style="margin: 10px" class="btn btn-success" onclick="verCursos()">Ver cursos</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verMatriculas()">Ver Matriculas</button>
         <button style="margin: 10px" class="btn btn-success" onclick="verRegistroEstud()">Agregar estudiantes</button>
         <button style="margin: 10px" class="btn btn-success" onclick="verRegistroCurso()">Agregar Cursos</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroMatricula()">Agregar Matricula</button>
+
       </div>
       <div class="contenedor-tabla" >
         <table class="" id='tablaEstudiantes' style="display: none;">
@@ -39,7 +42,7 @@
           <tbody id="cuerpoTablaEstudiantes">
           </tbody>
         </table>
-        <table class="" id='tablaCursos' style="display: none;">
+        <table class="" id="tablaCursos" style="display: none;">
           <tr>
               <th>NOMBRES</th>
               <th>TIPO</th>
@@ -48,12 +51,22 @@
           <tbody id="cuerpoTablaCursos">
           </tbody>
         </table>
+        <table class="" id="tablaMatriculas" style="display: none;">
+          <tr>
+              <th>ESTUDIANTE</th>
+              <th>CURSO</th>
+              <th>NOTAS</th>
+              <th>NOTA FINAL</th>
+          </tr>
+          <tbody id="cuerpoTablaMatriculas">
+          </tbody>
+        </table>
         <form id="aggEstudiante" style="display: none;">
             <div class="form-group">
               <label for="nombres">Nombres</label>
-              <input type="text" class="form-control" id="nombres" placeholder="Ingrese nombres" required pattern="\S(.*\S)?>
+              <input type="text" class="form-control" id="nombres" placeholder="Ingrese nombres" required pattern="\S(.*\S)?">
               <label for="apellidos">Apellidos</label>
-              <input type="text" class="form-control" id="apellidos" placeholder="Ingrese apellidos" required pattern="\S(.*\S)?>
+              <input type="text" class="form-control" id="apellidos" placeholder="Ingrese apellidos" required pattern="\S(.*\S)?">
               <label for="codigo">Código</label>
               <input type="text" class="form-control" id="codigo" placeholder="Ingrese código">
               <br>
@@ -63,7 +76,7 @@
         <form id="aggCurso" style="display: none;">
           <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Cálculo Integral" required pattern="\S(.*\S)?>
+            <input type="text" class="form-control" id="nombre" placeholder="Cálculo Integral" required pattern="\S(.*\S)?">
             <br>
             <label for="tipoCurso">Tipo de curso</label>
             <select name="tipoCurso" id="tipoCurso">
@@ -79,6 +92,21 @@
             <br><br>
           </div>
           <button type="button" class="btn btn-success" onclick="agregarCurso()">Registrar</button>
+        </form>
+        <form id="aggMatricula" style="display: none;">
+          <div class="form-group">
+            <select name="listaEstudiantes" id="listaEstudiantes">
+            </select>
+            <select name="listaCursos" id="listaCursos">
+            </select>
+            <label for="creditos">Nota 1:</label>
+            <input type="number" id="notaUno" name="notaUno" max="50" min="0" value="1">
+            <label for="creditos">Nota 2:</label>
+            <input type="number" id="notaDos" name="notaDos" max="50" min="0" value="1">
+            <label for="creditos">Nota 3:</label>
+            <input type="number" id="notaTres" name="notaTres" max="50" min="0" value="1">
+          </div>
+          <button type="button" class="btn btn-success" onclick="agregarMatricula()">Registrar</button>
         </form>
       </div>
       <footer>
