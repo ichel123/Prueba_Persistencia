@@ -1,12 +1,23 @@
-{
-    "matriculas":
-        [
-          {
-            "id": 1,
-            "idEstudiante": 1,
-            "idCurso": 1
-          }
+[
+  {
+    "estudiante": 20202020029,
+    "curso": "Matemáticas",
+    "notas": [30, 30, 30],
+    "notaFinal": 30
+  },
+  {
+    "estudiante": 20202020029,
+    "curso": "Lógica",
+    "notas": [30, 40, 30],
+    "notaFinal": 30
+  },
+  {
+    "estudiante": 20202020029,
+    "curso": "Fund. de Bases de Datos",
+    "notas": [40, 30, 35],
+    "notaFinal": 30
+  }
+]
   
-        ]  
-}
+  
   
