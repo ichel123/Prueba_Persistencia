@@ -1,0 +1,87 @@
+[
+  {
+    "nombres": "Natalia",
+    "apellidos": "Barbosa",
+    "codigo": "20202020030"
+  },
+  {
+    "nombres": "Ichel",
+    "apellidos": "Delgado",
+    "codigo": "20202020031"
+  },
+  {
+    "nombres": "Carlos",
+    "apellidos": "Pabón",
+    "codigo": "20202020029"
+  },
+  {
+    "nombres": "Nami",
+    "apellidos": "Delgado Barbosa",
+    "codigo": "20202020010"
+  },
+  {
+    "nombres": "Bebé",
+    "apellidos": "Delgado",
+    "codigo": "20202020001"
+  },
+  {
+    "nombres": "Mitsu",
+    "apellidos": "Barbosa",
+    "codigo": "20202020002"
+  },
+  {
+    "nombres": "Leia",
+    "apellidos": "Barbosa",
+    "codigo": "20202020005"
+  },
+  {
+    "nombres": "Sebastián",
+    "apellidos": "Garavito Camacho",
+    "codigo": "20202020015"
+  },
+  {
+    "nombres": "Nicolás",
+    "apellidos": "Sabogal Velásquez",
+    "codigo": "20202020008"
+  },
+  {
+    "nombres": "Juan David",
+    "apellidos": "Olmos Corredor",
+    "codigo": "20202020004"
+  },
+  {
+    "nombres": "Andrea",
+    "apellidos": "Morales",
+    "codigo": "20202020000"
+  },
+  {
+    "nombres": "Ana",
+    "apellidos": "Delgado",
+    "codigo": "20202020045"
+  },
+  {
+    "nombres": "Lucia",
+    "apellidos": "Hernández",
+    "codigo": "20202020065"
+  },
+  {
+    "nombres": "Sofía",
+    "apellidos": "Gómez",
+    "codigo": "20202020011"
+  },
+  {
+    "nombres": "Juan",
+    "apellidos": "Pérez",
+    "codigo": "2020202030"
+  },
+  {
+    "nombres": "Juana",
+    "apellidos": "De Arco",
+    "codigo": "20202020069"
+  },
+  {
+    "nombres": "Elmo",
+    "apellidos": "Cosso",
+    "codigo": "20202020018"
+  }
+]

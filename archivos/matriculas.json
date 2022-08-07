@@ -1,0 +1,12 @@
+{
+    "matriculas":
+        [
+          {
+            "id": 1,
+            "idEstudiante": 1,
+            "idCurso": 1
+          }
+  
+        ]  
+}
+  
