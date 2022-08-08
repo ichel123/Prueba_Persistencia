@@ -1,49 +1,65 @@
 const express = require('express');
 const router = express.Router();
-const persist = require("../persistencia").persist;
+const {cargar,guardar} = require("./funciones/persistencia");
+const {agregarDato} = require("./funciones/manipulacion");
+const {consultarDatos,consultarDatosFunc} = require("./funciones/consulta");
 const requestOk = 200;
 const requestFailed = 400;
+const rutaMatr = "./archivos/matriculas.json";
+const atrMatr = ["estudiante","curso","notas","nota final"]
+const atrMatrO = ["estudiante","curso","notas"]
 
-let persistencia = new persist(["idEstudiante","idCurso","notas","notaFinal"],"./archivos/matriculas.json");
 
-//Obtener estudiantes
+let matriculas;
+
+router.use(function (req, res, next) {
+    if(matriculas == null){matriculas = cargar(rutaMatr)}
+    next();
+    guardar(matriculas,rutaMatr);
+})
+
+//Obtener matriculas
 router.get('/', (request, response) => {
-    response.send(persistencia.obtenerDatos());
+    response.send(matriculas);
 })
 
-//Obtener estudiante
-router.post('/', (request, response) => {
-    response.send(persistencia.obtenerDato(request.body));
+//Obtener matricula
+router.get('/consulta', (request, response) => {
+    response.send(consultarDatos(matriculas,request.body,atrMatr));
 })
 
-//Eliminar estudiante
-router.post('/eliminar', (request, response) => {
-    response.status(persistencia.eliminarDatos(request.body)).end();
+
+//Agregar matricula
+router.post('/',(request,response) => {
+    //comprobacion de que el codigo no este repetido
+    matriculas.forEach(matricula => {
+        if(matricula.codigo == request.body.codigo) {
+            response.status(requestFailed).end();
+            return;
+        }
+    });
+    
+    //agreagar dato
+    if(agregarDato(matriculas,crearMatr(request.body),atrMatr)){
+        response.status(requestOk).end();
+    }
+    response.status(requestFailed).end();
 })
 
-//Agregar estudiante
-router.post('/agregar',(request,response) => {
-    //cuerpo de la peticion
-    let cuerpoPet = request.body;
+function crearMatr(cuerpoPet){
 
-    //comprobar que esten todos los datos
-    if(!persistencia.comprobarAtr(cuerpoPet)) {
-        response.status(requestFailed).end();
-        return;
+    //comprobacion de que tenga un minimo de datos
+    if(Object.values(cuerpoPet).length != atrMatrO.length) return {};
+    for (const key in cuerpoPet) {
+        if(!atrMatrO.includes(key) || cuerpoPet[key] == null) return {};
     }
 
-    //comprobacion de que el codigo no este repetido
-    let matriculas = persistencia.obtenerDatos();
-    let existe = false;
-    matriculas.forEach(matricula => {
-        if(matricula.codigo == cuerpoPet.codigo) existe = true;
-    });
-
-    console.log(!existe);
-    //agreagar dato
-    let responseStatus = (!existe)? persistencia.agregarDatos(cuerpoPet) : requestFailed;
-
-    response.status(responseStatus).end();
-})
+    return {
+        "estudiante" : cuerpoPet.nombres,
+        "curso" : cuerpoPet.apellidos,
+        "notas" : cuerpoPet.codigo,
+        "nota final" : 0
+    }
+}
 
 module.exports = router

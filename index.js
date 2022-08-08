@@ -12,8 +12,8 @@ res.setHeader('Access-Control-Allow-Credentials', true);
 next();
 });
 
-//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/estudiantes', require("./metodos/estudiante"));
 app.use('/cursos', require("./metodos/curso"));
 

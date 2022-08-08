@@ -1,15 +1,5 @@
 [
   {
-    "nombres": "Natalia",
-    "apellidos": "Barbosa",
-    "codigo": "20202020030"
-  },
-  {
-    "nombres": "Ichel",
-    "apellidos": "Delgado",
-    "codigo": "20202020031"
-  },
-  {
     "nombres": "Carlos",
     "apellidos": "Pabón",
     "codigo": "20202020029"
@@ -18,11 +8,6 @@
     "nombres": "Nami",
     "apellidos": "Delgado Barbosa",
     "codigo": "20202020010"
-  },
-  {
-    "nombres": "Bebé",
-    "apellidos": "Delgado",
-    "codigo": "20202020001"
   },
   {
     "nombres": "Mitsu",
@@ -45,19 +30,9 @@
     "codigo": "20202020008"
   },
   {
-    "nombres": "Juan David",
-    "apellidos": "Olmos Corredor",
-    "codigo": "20202020004"
-  },
-  {
     "nombres": "Andrea",
     "apellidos": "Morales",
     "codigo": "20202020000"
-  },
-  {
-    "nombres": "Ana",
-    "apellidos": "Delgado",
-    "codigo": "20202020045"
   },
   {
     "nombres": "Lucia",
@@ -83,5 +58,15 @@
     "nombres": "Elmo",
     "apellidos": "Cosso",
     "codigo": "20202020018"
+  },
+  {
+    "nombres": "jjuan",
+    "apellidos": "david",
+    "codigo": "1"
+  },
+  {
+    "nombres": "fgdf",
+    "apellidos": "dfgdfg",
+    "codigo": "fdgd"
   }
 ]

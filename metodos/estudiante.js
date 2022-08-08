@@ -1,50 +1,89 @@
 const express = require('express');
 const router = express.Router();
-const persist = require("../persistencia").persist;
+const {cargar,guardar} = require("./funciones/persistencia");
+const {agregarDato, eliminarDatos, modificarDatos} = require("./funciones/manipulacion");
+const {consultarDatos,consultarDatosFunc} = require("./funciones/consulta");
 const requestOk = 200;
 const requestFailed = 400;
+const rutaEst = "./archivos/estudiantes.json";
+const atrEst = ["nombres","apellidos","codigo","promedio"]
+const atrEstO = ["nombres","apellidos","codigo"]
 
-let persistencia = new persist(["nombres","apellidos","codigo"],"./archivos/estudiantes.json");
+
+let estudiantes;
+
+router.use(function (req, res, next) {
+    if(estudiantes == null){estudiantes = cargar(rutaEst)}
+    next();
+    guardar(estudiantes,rutaEst);
+})
 
 //Obtener estudiantes
 router.get('/', (request, response) => {
-    response.send(persistencia.obtenerDatos());
+    response.send(estudiantes);
 })
 
 //Obtener estudiante
-router.post('/', (request, response) => {
-    response.send(persistencia.obtenerDato(request.body));
+router.get('/consulta', (request, response) => {
+    response.send(consultarDatos(estudiantes,request.body,atrEst));
 })
 
 //Eliminar estudiante
-router.post('/eliminar', (request, response) => {
-    response.status(persistencia.eliminarDatos(request.body)).end();
+router.delete('/', (request, response) => {
+    listaModificada = eliminarDatos(estudiantes,request.body,atrEst);
+    if(listaModificada != []){
+        estudiantes = listaModificada;
+        response.status(requestOk).end();
+    }
+    response.status(requestFailed).end();
 })
 
 //Agregar estudiante
-router.post('/agregar',(request,response) => {
-    //cuerpo de la peticion
-    let cuerpoPet = request.body;
-
-    //comprobar que esten todos los datos
-    if(!persistencia.comprobarAtr(cuerpoPet)) {
-        response.status(requestFailed).end();
-        return;
-    }
-
+router.post('/',(request,response) => {
     //comprobacion de que el codigo no este repetido
-    let estudiantes = persistencia.obtenerDatos();
-    let existe = false;
     estudiantes.forEach(estudiante => {
-        if(estudiante.codigo == cuerpoPet.codigo) existe = true;
+        if(estudiante.codigo == request.body.codigo) {
+            response.status(requestFailed).end();
+            return;
+        }
     });
-
-    console.log(!existe);
+    
     //agreagar dato
-    let responseStatus = (!existe)? persistencia.agregarDatos(cuerpoPet) : requestFailed;
-
-    response.status(responseStatus).end();
+    if(agregarDato(estudiantes,crearEst(request.body),atrEst)){
+        response.status(requestOk).end();
+    }
+    response.status(requestFailed).end();
 })
 
+//Modificar estudiante
+router.put('/', (request, response) => {
+    
+    valores = Object.values(request.body)
+    remplazado = valores.shift()
+    remplazo = valores.shift()
+    listaModificada = modificarDatos(estudiantes, remplazado, remplazo, atrEst);
+    if(listaModificada != []){
+        estudiantes = listaModificada;
+        response.status(requestOk).end();
+    }
+    response.status(requestFailed).end();
+})
+
+
+function crearEst(cuerpoPet){
+
+    //comprobacion de que tenga un minimo de datos
+    if(Object.values(cuerpoPet).length != atrEstO.length) return {};
+    for (const key in cuerpoPet) {
+        if(!atrEstO.includes(key) || cuerpoPet[key] == null) return {};
+    }
+
+    return {
+        "nombres" : cuerpoPet.nombres,
+        "apellidos" : cuerpoPet.apellidos,
+        "codigo" : cuerpoPet.codigo,
+        "promedio" : 0
+    }
+}
 
 module.exports = router
