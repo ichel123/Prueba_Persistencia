@@ -14,7 +14,7 @@ let cursos;
 router.use(function (req, res, next) {
     if(cursos == null){cursos = cargar(rutaCurs)}
     next();
-    guardar(cursos,rutaCurs);
+    // guardar(cursos,rutaCurs);
 })
 
 //Obtener cursos
@@ -23,7 +23,8 @@ router.get('/', (request, response) => {
 })
 
 //Obtener curso
-router.get('/consulta', (request, response) => {
+router.post('/consulta', (request, response) => {
+    console.log(request.body);
     response.send(consultarDatos(cursos,request.body,atrCurs));
 })
 

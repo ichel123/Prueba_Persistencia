@@ -1,10 +1,5 @@
 [
   {
-    "nombres": "Carlos",
-    "apellidos": "Pabón",
-    "codigo": "20202020029"
-  },
-  {
     "nombres": "Nami",
     "apellidos": "Delgado Barbosa",
     "codigo": "20202020010"
@@ -18,11 +13,6 @@
     "nombres": "Leia",
     "apellidos": "Barbosa",
     "codigo": "20202020005"
-  },
-  {
-    "nombres": "Sebastián",
-    "apellidos": "Garavito Camacho",
-    "codigo": "20202020015"
   },
   {
     "nombres": "Nicolás",
@@ -58,15 +48,5 @@
     "nombres": "Elmo",
     "apellidos": "Cosso",
     "codigo": "20202020018"
-  },
-  {
-    "nombres": "jjuan",
-    "apellidos": "david",
-    "codigo": "1"
-  },
-  {
-    "nombres": "fgdf",
-    "apellidos": "dfgdfg",
-    "codigo": "fdgd"
   }
 ]

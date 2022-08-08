@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/estudiantes', require("./metodos/estudiante"));
 app.use('/cursos', require("./metodos/curso"));
+app.use('/matriculas', require("./metodos/matricula"));
+
 
 
 app.listen(port, () => {

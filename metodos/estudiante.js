@@ -7,6 +7,7 @@ const requestOk = 200;
 const requestFailed = 400;
 const rutaEst = "./archivos/estudiantes.json";
 const atrEst = ["nombres","apellidos","codigo","promedio"]
+const atrEstModf = ["nombres","apellidos"]
 const atrEstO = ["nombres","apellidos","codigo"]
 
 
@@ -15,7 +16,6 @@ let estudiantes;
 router.use(function (req, res, next) {
     if(estudiantes == null){estudiantes = cargar(rutaEst)}
     next();
-    guardar(estudiantes,rutaEst);
 })
 
 //Obtener estudiantes
@@ -35,6 +35,7 @@ router.delete('/', (request, response) => {
         estudiantes = listaModificada;
         response.status(requestOk).end();
     }
+    guardar(estudiantes,rutaEst);
     response.status(requestFailed).end();
 })
 
@@ -52,6 +53,7 @@ router.post('/',(request,response) => {
     if(agregarDato(estudiantes,crearEst(request.body),atrEst)){
         response.status(requestOk).end();
     }
+    guardar(estudiantes,rutaEst);
     response.status(requestFailed).end();
 })
 
@@ -66,6 +68,7 @@ router.put('/', (request, response) => {
         estudiantes = listaModificada;
         response.status(requestOk).end();
     }
+    guardar(estudiantes,rutaEst);
     response.status(requestFailed).end();
 })
 

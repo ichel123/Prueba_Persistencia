@@ -1,8 +1,11 @@
 function agregarDato(lista, dato, atributos){
-
-    if(Object.values(dato).length != atributos.length) return false;
+    if(Object.values(dato).length != atributos.length) {
+        console.log("Atr no completos");
+        return false;}
     for (const key in dato) {
-        if(!atributos.includes(key) || dato[key] == null) return false;
+        if(!atributos.includes(key) || dato[key] == null) {
+            console.log("Atr no valido");
+            return false;}
     }
     lista.push(dato);
     console.log(lista);

@@ -1,22 +1,22 @@
 [
   {
     "nombre": "Matemáticas",
-    "tipo": "Teórica",
+    "tipo": "Teórico",
     "creditos": "2"
   },
   {
     "nombre": "Lógica",
-    "tipo": "Teórica",
+    "tipo": "Teórico",
     "creditos": "2"
   },
   {
     "nombre": "Programación Avanzada",
-    "tipo": "Teórico-Práctica",
+    "tipo": "Teórico-Práctico",
     "creditos": "2"
   },
   {
     "nombre": "Fund. de Bases de Datos",
-    "tipo": "Teórico-Práctica",
+    "tipo": "Teórico-Práctico",
     "creditos": "2"
   }
 ]

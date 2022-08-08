@@ -6,7 +6,7 @@ const {consultarDatos,consultarDatosFunc} = require("./funciones/consulta");
 const requestOk = 200;
 const requestFailed = 400;
 const rutaMatr = "./archivos/matriculas.json";
-const atrMatr = ["estudiante","curso","notas","nota final"]
+const atrMatr = ["estudiante","curso","notas","notaFinal"]
 const atrMatrO = ["estudiante","curso","notas"]
 
 
@@ -15,7 +15,6 @@ let matriculas;
 router.use(function (req, res, next) {
     if(matriculas == null){matriculas = cargar(rutaMatr)}
     next();
-    guardar(matriculas,rutaMatr);
 })
 
 //Obtener matriculas
@@ -31,16 +30,22 @@ router.get('/consulta', (request, response) => {
 
 //Agregar matricula
 router.post('/',(request,response) => {
+    let existe = false;
     //comprobacion de que el codigo no este repetido
     matriculas.forEach(matricula => {
-        if(matricula.codigo == request.body.codigo) {
+        if(matricula.estudiante == request.body.estudiante) {
             response.status(requestFailed).end();
+            existe = true;
             return;
         }
     });
-    
+    if(existe) {
+        return;
+    }
+    guardar(matriculas,rutaMatr);
     //agreagar dato
     if(agregarDato(matriculas,crearMatr(request.body),atrMatr)){
+        console.log("200");
         response.status(requestOk).end();
     }
     response.status(requestFailed).end();
@@ -55,10 +60,10 @@ function crearMatr(cuerpoPet){
     }
 
     return {
-        "estudiante" : cuerpoPet.nombres,
-        "curso" : cuerpoPet.apellidos,
-        "notas" : cuerpoPet.codigo,
-        "nota final" : 0
+        "estudiante" : cuerpoPet.estudiante,
+        "curso" : cuerpoPet.curso,
+        "notas" : cuerpoPet.notas,
+        "notaFinal" : 0
     }
 }
 

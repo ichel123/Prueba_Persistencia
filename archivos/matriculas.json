@@ -1,23 +1,43 @@
 [
   {
-    "estudiante": 20202020029,
+    "estudiante": "20202020018",
     "curso": "Matemáticas",
-    "notas": [30, 30, 30],
-    "notaFinal": 30
+    "notas": [
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
   },
   {
-    "estudiante": 20202020029,
-    "curso": "Lógica",
-    "notas": [30, 40, 30],
-    "notaFinal": 30
+    "estudiante": "20202020011",
+    "curso": "Matemáticas",
+    "notas": [
+      "1",
+      "4.6",
+      "1"
+    ],
+    "notaFinal": 0
   },
   {
-    "estudiante": 20202020029,
-    "curso": "Fund. de Bases de Datos",
-    "notas": [40, 30, 35],
-    "notaFinal": 30
+    "estudiante": "20202020005",
+    "curso": "Programación Avanzada",
+    "notas": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
+  },
+  {
+    "estudiante": "20202020008",
+    "curso": "Matemáticas",
+    "notas": [
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
   }
 ]
-  
-  
-  
