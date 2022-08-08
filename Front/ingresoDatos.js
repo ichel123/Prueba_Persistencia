@@ -16,26 +16,20 @@ function agregarEstudiante(){
         };
 
         $.ajax({
-            url: url+"/estudiantes/agregar",
+            url: url+"/estudiantes",
             type: "POST",
-            dataType: "json",
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (response) {
-                //limpiar();
                 alert("Estudiante agregado")
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("No se pudo agregar el curso")
             }
-            // error: function (xhr, status) {
-            //     alert("No se pudo agregar al estudiante")
-            // }
         });
     }
 }
 function agregarCurso(){
-    $("#tablaCursos").hide();
-    $("#tablaEstudiantes").hide();
-    $("#aggEstudiante").hide();
-    $("#aggCurso").show();
     if($("#nombre").val()==""){
         alert("Todos los campos son obligatorios");
     }
@@ -51,63 +45,46 @@ function agregarCurso(){
         };
 
         $.ajax({
-            url: url+"/cursos/agregar",
+            url: url+"/cursos",
             type: "POST",
-            dataType: "json",
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (response) {
-                limpiar();
                 alert("Curso agregado")
                 $("#aggCurso").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("No se pudo agregar el curso")
             }
-            // error: function (jqXHR, textStatus, errorThrown) {
-            //     alert("No se pudo agregar el curso")
-            // }
         });
     }
 }
 function agregarMatricula() {
-    $("#tablaCursos").hide();
-    $("#tablaEstudiantes").hide();
-    $("#aggEstudiante").hide();
-    $("#aggCurso").hide();
-    $("#aggMatricula").show();
 
     let estudiante = $("#estudiante").val();
     let curso = $("#curso").val();
     let notaUno = $("#notaUno").val();
-    //let notaDos = $("#notaDos").val();
-    //let notaDos = $("#notaDos").val();
+    let notaDos = $("#notaDos").val();
+    let notaTres = $("#notaTres").val();
 
-    let notaFinal = (notaUno + notaDos + notaTres)/3;
-
+    let notaFinal = notaUno*0.35 + notaDos*0.35 + notaTres*0.30;
     var data = {
         estudiante:estudiante,
         curso:curso,
-        notas:{notaUno,notaDos,notaDos},
+        notas:[notaUno,notaDos,notaDos],
         notaFinal:notaFinal
     };
 
     $.ajax({
-        url: url+"/matriculas/agregar",
+        url: url+"/matriculas",
         type: "POST",
-        dataType: "json",
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function (response) {
-            limpiar();
-            alert("Curso agregado")
-            $("#aggCurso").show();
+            alert("Estudiante matriculado")
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("No se pudo matricular al estudiante")
         }
-        // error: function (jqXHR, textStatus, errorThrown) {
-        //     alert("No se pudo agregar el curso")
-        // }
     });
-}
-
-function limpiar(){
-    $("#nombres").val("");
-    $("#apellidos").val("");
-    $("#codigo").val("");
 }

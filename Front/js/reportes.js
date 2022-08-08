@@ -7,19 +7,19 @@ function verEstudiantes(){
     $("#tablaMatriculas").hide();
     $("#tablaEstudiantes").show();
     $(document).ready(function () {
-        $.getJSON(url+"/estudiantes", function (data) {
-            $('#cuerpoTablaEstudiantes').empty();
-            $.each(data, function (key, value) {
-                $('#cuerpoTablaEstudiantes').append(
-                    '<tr>'+
-                        '<td>' +value.nombres + '</td>'+
-                        '<td>' +value.apellidos + '</td>'+
-                        '<td>' +value.codigo + '</td>'+
-                    '</tr>'
-                ); 
-            });
+    $.getJSON(url+"/estudiantes", function (data) {
+        $('#cuerpoTablaEstudiantes').empty();
+        $.each(data, function (key, value) {
+            $('#cuerpoTablaEstudiantes').append(
+                '<tr>'+
+                    '<td>' +value.nombres + '</td>'+
+                    '<td>' +value.apellidos + '</td>'+
+                    '<td>' +value.codigo + '</td>'+
+                '</tr>'
+            ); 
         });
     });
+  });
 }
 function verRegistroEstud(){
     $("#tablaCursos").hide();
@@ -46,6 +46,7 @@ function verRegistroMatricula(){
     $("#aggMatricula").show();
     selectEstudiantes();
     selectCursos();
+
 }
 function verCursos(){
     $("#tablaEstudiantes").hide();
@@ -79,7 +80,7 @@ function verMatriculas(){
     $(document).ready(function () {
     $.getJSON(url+"/matriculas", function (data) {
         $('#cuerpoTablaMatriculas').empty();
-        $.each(data, function (key, value) {
+        $.each(data, function (key,value) {
             $('#cuerpoTablaMatriculas').append(
                 '<tr>'+
                     '<td>' +value.estudiante + '</td>'+
@@ -99,9 +100,47 @@ function selectEstudiantes(){
     listaSelect.prop('selectedIndex', 0);
 
     $.getJSON(url+"/estudiantes", function (data) {
-        $.each(data, function (key, value) {
-            listaSelect.append($('<option></option>').attr('value', value.codigo).text(value.nombres)); 
+        $.each(data, function (key,value) {
+            console.log(typeof(value.codigo)+"Value: "+value.codigo);
+            listaSelect.append($('<option></option>').attr('value',value.codigo).text(value.codigo)); 
         });
+    });
+}
+function getCursoValue(nombre){
+    var data = {
+        nombre:nombre
+    };
+    
+    $.ajax({
+        url: url+"/cursos/consulta",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(data);
+            console.log("hola response: " + JSON.stringify(response));
+
+            let divNotas = $('#notas');
+            console.log(response[0].tipo);
+
+            if(response[0].tipo=="Teórico"){
+                divNotas.empty();
+                for(var i=0; i<3; i++){
+                    divNotas.append('<label for="creditos">Nota '+(i+1)+''+':</label>'+
+                    '<input step="0.1" type="number" id="nota'+(i+1)+'" name="notas" max="5" min="0" value="1">')
+                }
+            }
+            else{
+                divNotas.empty();
+                for(var i=0; i<4; i++){
+                    divNotas.append('<label for="creditos">Nota '+(i+1)+''+':</label>'+
+                    '<input step="0.1" type="number" id="nota'+(i+1)+'" name="notas" max="5" min="0" value="1">')
+                }
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("No se pudo agregar el curso")
+        }
     });
 }
 function selectCursos(){
@@ -109,10 +148,15 @@ function selectCursos(){
     listaSelect.empty();
     listaSelect.append('<option selected = "true">Elija curso</option>');
     listaSelect.prop('selectedIndex', 0);
-
+    
     $.getJSON(url+"/cursos", function (data) {
-        $.each(data, function (key, value) {
+        $.each(data, function (key,value) {
             listaSelect.append($('<option></option>').attr('value', value.nombre).text(value.nombre)); 
         });
     });
+    $(document).ready(function(){
+        $('#listaCursos').change(function(){
+            getCursoValue($(this).val());
+        })
+    })
 }

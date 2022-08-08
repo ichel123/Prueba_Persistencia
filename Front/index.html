@@ -9,8 +9,8 @@
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="reportes.js"></script>
-    <script src="ingresoDatos.js"></script>
+    <script src="js/reportes.js"></script>
+    <script src="js/ingresoDatos.js"></script>
   </head>
   <body>
     <div class="align-middle" role="banner">
@@ -95,16 +95,11 @@
         </form>
         <form id="aggMatricula" style="display: none;">
           <div class="form-group">
-            <select name="listaEstudiantes" id="listaEstudiantes">
+            <select name="listaEstudiantes" id="listaEstudiantes" >
             </select>
             <select name="listaCursos" id="listaCursos">
             </select>
-            <label for="creditos">Nota 1:</label>
-            <input type="number" id="notaUno" name="notaUno" max="50" min="0" value="1">
-            <label for="creditos">Nota 2:</label>
-            <input type="number" id="notaDos" name="notaDos" max="50" min="0" value="1">
-            <label for="creditos">Nota 3:</label>
-            <input type="number" id="notaTres" name="notaTres" max="50" min="0" value="1">
+            <div id="notas"></div>
           </div>
           <button type="button" class="btn btn-success" onclick="agregarMatricula()">Registrar</button>
         </form>
