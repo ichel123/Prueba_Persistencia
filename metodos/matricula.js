@@ -42,12 +42,12 @@ router.post('/',(request,response) => {
     if(existe) {
         return;
     }
-    guardar(matriculas,rutaMatr);
     //agreagar dato
     if(agregarDato(matriculas,crearMatr(request.body),atrMatr)){
         console.log("200");
         response.status(requestOk).end();
     }
+    guardar(matriculas,rutaMatr);
     response.status(requestFailed).end();
 })
 

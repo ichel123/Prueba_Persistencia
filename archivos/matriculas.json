@@ -39,5 +39,37 @@
       "1"
     ],
     "notaFinal": 0
+  },
+  {
+    "estudiante": "20202020065",
+    "curso": "Lógica",
+    "notas": [
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
+  },
+  {
+    "estudiante": "20202020010",
+    "curso": "Programación Avanzada",
+    "notas": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
+  },
+  {
+    "estudiante": "65656565656",
+    "curso": "dgdsgdsgds",
+    "notas": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "notaFinal": 0
   }
 ]

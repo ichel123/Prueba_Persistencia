@@ -14,7 +14,6 @@ let cursos;
 router.use(function (req, res, next) {
     if(cursos == null){cursos = cargar(rutaCurs)}
     next();
-    // guardar(cursos,rutaCurs);
 })
 
 //Obtener cursos
@@ -24,7 +23,6 @@ router.get('/', (request, response) => {
 
 //Obtener curso
 router.post('/consulta', (request, response) => {
-    console.log(request.body);
     response.send(consultarDatos(cursos,request.body,atrCurs));
 })
 
@@ -35,6 +33,7 @@ router.delete('/', (request, response) => {
         cursos = listaModificada;
         response.status(requestOk).end();
     }
+    guardar(cursos,rutaCurs);
     response.status(requestFailed).end();
 })
 
@@ -47,11 +46,11 @@ router.post('/',(request,response) => {
             return;
         }
     });
-    
     //agreagar dato
     if(agregarDato(cursos,crearCurs(request.body),atrCurs)){
         response.status(requestOk).end();
     }
+    guardar(cursos,rutaCurs);
     response.status(requestFailed).end();
 })
 
@@ -61,20 +60,21 @@ router.put('/', (request, response) => {
     valores = Object.values(request.body)
     remplazado = valores.shift()
     remplazo = valores.shift()
-    listaModificada = modificarDatos(cursos, remplazado, remplazo, atrEst);
+    listaModificada = modificarDatos(cursos, remplazado, remplazo, atrCurs);
     if(listaModificada != []){
         cursos = listaModificada;
         response.status(requestOk).end();
     }
+    guardar(cursos,rutaCurs);
     response.status(requestFailed).end();
 })
 
 function crearCurs(cuerpoPet){
 
     //comprobacion de que tenga un minimo de datos
-    if(Object.values(cuerpoPet).length != atrEstO.length) return {};
+    if(Object.values(cuerpoPet).length != atrCursO.length) return {};
     for (const key in cuerpoPet) {
-        if(!atrEstO.includes(key) || cuerpoPet[key] == null) return {};
+        if(!atrCursO.includes(key) || cuerpoPet[key] == null) return {};
     }
 
     return {
