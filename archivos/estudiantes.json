@@ -35,30 +35,9 @@
     "codigo": "20202020011"
   },
   {
-    "nombres": "Juan",
-    "apellidos": "Pérez",
-    "codigo": "2020202030"
-  },
-  {
-    "nombres": "Juana",
-    "apellidos": "De Arco",
-    "codigo": "20202020069"
-  },
-  {
-    "nombres": "Elmo",
-    "apellidos": "Cosso",
-    "codigo": "20202020018"
-  },
-  {
-    "nombres": "dgdgdg",
-    "apellidos": "dsgdgdg",
-    "codigo": "65656565656",
-    "promedio": 0
-  },
-  {
-    "nombres": "sfdfdfdsf",
-    "apellidos": "sdgdsgdsgds",
-    "codigo": "56565656656",
+    "nombres": "Juan David",
+    "apellidos": "Olmos Corredor",
+    "codigo": "20202020004",
     "promedio": 0
   }
 ]

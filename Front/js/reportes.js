@@ -5,7 +5,11 @@ function verEstudiantes(){
     $("#aggEstudiante").hide();
     $("#aggCurso").hide();
     $("#tablaMatriculas").hide();
+    $("#btnRegistroCurso").hide();
+    $("#btnRegistroMat").hide();
+    $("#aggMatricula").hide();
     $("#tablaEstudiantes").show();
+    $("#btnRegistroEst").show();
     $(document).ready(function () {
     $.getJSON(url+"/estudiantes", function (data) {
         $('#cuerpoTablaEstudiantes').empty();
@@ -15,6 +19,64 @@ function verEstudiantes(){
                     '<td>' +value.nombres + '</td>'+
                     '<td>' +value.apellidos + '</td>'+
                     '<td>' +value.codigo + '</td>'+
+                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editarEstudiante('+value.nombres+','+value.apellidos+','+value.codigo+')>Editar</button>'+
+                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarEstudiante('+value.codigo+')>Eliminar</button>'+'</td>'+
+                '</tr>'
+            ); 
+        });
+    });
+  });
+}
+
+function verCursos(){
+    $("#btnRegistroEst").hide();
+    $("#tablaEstudiantes").hide();
+    $("#aggEstudiante").hide();
+    $("#tablaMatriculas").hide();
+    $("#aggMatricula").hide();
+    $("#aggCurso").hide();
+    $("#btnRegistroMat").hide();
+    $("#tablaCursos").show();
+    $("#btnRegistroCurso").show();
+    $(document).ready(function () {
+    $.getJSON(url+"/cursos", function (data) {
+        $('#cuerpoTablaCursos').empty();
+        $.each(data, function (key, value) {
+            $('#cuerpoTablaCursos').append(
+                '<tr>'+
+                    '<td>' +value.nombre + '</td>'+
+                    '<td>' +value.tipo + '</td>'+
+                    '<td>' +value.creditos + '</td>'+
+                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editar('+value.nombre+','+value.tipo+','+value.creditos+')>Editar</button>'+
+                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarCurso('+value.nombre+')>Eliminar</button>'+'</td>'+
+                '</tr>'
+            ); 
+        });
+    });
+  });
+}
+function verMatriculas(){
+    $("#btnRegistroCurso").hide();
+    $("#btnRegistroEst").hide();
+    $("#tablaCursos").hide();
+    $("#tablaEstudiantes").hide();
+    $("#aggEstudiante").hide();
+    $("#aggMatricula").hide();
+    $("#aggCurso").hide();
+    $("#btnRegistroMat").show();
+    $("#tablaMatriculas").show();
+    $(document).ready(function () {
+    $.getJSON(url+"/matriculas", function (data) {
+        $('#cuerpoTablaMatriculas').empty();
+        $.each(data, function (key,value) {
+            $('#cuerpoTablaMatriculas').append(
+                '<tr>'+
+                    '<td>' +value.estudiante + '</td>'+
+                    '<td>' +value.curso + '</td>'+
+                    '<td>' +JSON.stringify(value.notas) + '</td>'+
+                    '<td>' +value.notaFinal + '</td>'+
+                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editar('+value.nombres+','+value.apellidos+','+value.codigo+')>Editar</button>'+
+                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarMatricula('+value.codigo+')>Eliminar</button>'+'</td>'+
                 '</tr>'
             ); 
         });
@@ -27,9 +89,11 @@ function verRegistroEstud(){
     $("#aggCurso").hide();
     $("#tablaMatriculas").hide();
     $("#aggMatricula").hide();
+    $("#btnRegistroEst").hide();
     $("#aggEstudiante").show();
 }
 function verRegistroCurso(){
+    $("#btnRegistroCurso").hide();
     $("#tablaCursos").hide();
     $("#tablaEstudiantes").hide();
     $("#aggEstudiante").hide();
@@ -43,56 +107,13 @@ function verRegistroMatricula(){
     $("#aggEstudiante").hide();
     $("#tablaMatriculas").hide();
     $("#aggCurso").hide();
+    $("#btnRegistroMat").hide();
     $("#aggMatricula").show();
     selectEstudiantes();
     selectCursos();
 
 }
-function verCursos(){
-    $("#tablaEstudiantes").hide();
-    $("#aggEstudiante").hide();
-    $("#tablaMatriculas").hide();
-    $("#aggMatricula").hide();
-    $("#aggCurso").hide();
-    $("#tablaCursos").show();
-    $(document).ready(function () {
-    $.getJSON(url+"/cursos", function (data) {
-        $('#cuerpoTablaCursos').empty();
-        $.each(data, function (key, value) {
-            $('#cuerpoTablaCursos').append(
-                '<tr>'+
-                    '<td>' +value.nombre + '</td>'+
-                    '<td>' +value.tipo + '</td>'+
-                    '<td>' +value.creditos + '</td>'+
-                '</tr>'
-            ); 
-        });
-    });
-  });
-}
-function verMatriculas(){
-    $("#tablaCursos").hide();
-    $("#tablaEstudiantes").hide();
-    $("#aggEstudiante").hide();
-    $("#aggMatricula").hide();
-    $("#aggCurso").hide();
-    $("#tablaMatriculas").show();
-    $(document).ready(function () {
-    $.getJSON(url+"/matriculas", function (data) {
-        $('#cuerpoTablaMatriculas').empty();
-        $.each(data, function (key,value) {
-            $('#cuerpoTablaMatriculas').append(
-                '<tr>'+
-                    '<td>' +value.estudiante + '</td>'+
-                    '<td>' +value.curso + '</td>'+
-                    '<td>' +value.notas + '</td>'+
-                    '<td>' +value.notaFinal + '</td>'+
-                '</tr>'
-            ); 
-        });
-    });
-  });
-}
+// Listas Desplegables
 function selectEstudiantes(){
     let listaSelect = $('#listaEstudiantes');
     listaSelect.empty();
@@ -101,7 +122,6 @@ function selectEstudiantes(){
 
     $.getJSON(url+"/estudiantes", function (data) {
         $.each(data, function (key,value) {
-            console.log(typeof(value.codigo)+"Value: "+value.codigo);
             listaSelect.append($('<option></option>').attr('value',value.codigo).text(value.codigo)); 
         });
     });

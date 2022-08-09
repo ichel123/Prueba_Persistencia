@@ -15,7 +15,7 @@ div .div-botones{
     margin: auto;
     align-items: center;
 }
-div .contenedor-tabla{
+div .contenedor-global{
     max-width: 50em;
     margin: auto;
 }
@@ -29,7 +29,6 @@ h1 {
         'Trebuchet MS', 'sans-serif';
 }
 
-
 td {
     background-color: #E4F5D4;
     border: 1px solid black;
@@ -40,7 +39,7 @@ th,.thead-dark{
     border: 1px solid black;
     padding: 2px 25px 2px ;
     text-align: center;
-    background-color: #5acb47;
+    background-color: #8DB886;
 }
 td {
     border: 1px solid black;

@@ -20,9 +20,13 @@
     "creditos": "2"
   },
   {
-    "nombre": "dgdsgdsgds",
-    "tipo": "Teórico-Práctico",
-    "creditos": "1",
-    "nota grupal": 0
+    "nombre": "Probabilidad",
+    "tipo": "Teórico",
+    "creditos": "3"
+  },
+  {
+    "nombre": "Estadística",
+    "tipo": "Teórico",
+    "creditos": "3"
   }
 ]

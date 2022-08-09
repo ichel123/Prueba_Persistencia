@@ -1,4 +1,3 @@
-
 <html>
   <head>
     <meta charset="UTF-8">
@@ -11,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/reportes.js"></script>
     <script src="js/ingresoDatos.js"></script>
+    <link rel="stylesheet" href="css/modal.css">
   </head>
   <body>
     <div class="align-middle" role="banner">
@@ -24,44 +24,27 @@
       <div class="card highlight-card card-small">
   
       <div class="div-botones">
-        <button style="margin: 10px" class="btn btn-success" onclick="verEstudiantes()">Ver estudiantes</button>
-        <button style="margin: 10px" class="btn btn-success" onclick="verCursos()">Ver cursos</button>
-        <button style="margin: 10px" class="btn btn-success" onclick="verMatriculas()">Ver Matriculas</button>
-        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroEstud()">Agregar estudiantes</button>
-        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroCurso()">Agregar Cursos</button>
-        <button style="margin: 10px" class="btn btn-success" onclick="verRegistroMatricula()">Agregar Matricula</button>
-
+        <button style="margin: 10px" class="btn btn-success" id="" onclick="verEstudiantes()">Estudiantes</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verCursos()">Cursos</button>
+        <button style="margin: 10px" class="btn btn-success" onclick="verMatriculas()">Matriculas</button>
       </div>
-      <div class="contenedor-tabla" >
-        <table class="" id='tablaEstudiantes' style="display: none;">
-          <tr>
-              <th>NOMBRES</th>
-              <th>APELLIDOS</th>
-              <th>CODIGO</th>
-          </tr>
-          <tbody id="cuerpoTablaEstudiantes">
-          </tbody>
-        </table>
-        <table class="" id="tablaCursos" style="display: none;">
-          <tr>
-              <th>NOMBRES</th>
-              <th>TIPO</th>
-              <th>CRÉDITOS</th>
-          </tr>
-          <tbody id="cuerpoTablaCursos">
-          </tbody>
-        </table>
-        <table class="" id="tablaMatriculas" style="display: none;">
-          <tr>
-              <th>ESTUDIANTE</th>
-              <th>CURSO</th>
-              <th>NOTAS</th>
-              <th>NOTA FINAL</th>
-          </tr>
-          <tbody id="cuerpoTablaMatriculas">
-          </tbody>
-        </table>
-        <form id="aggEstudiante" style="display: none;">
+      <!-- CONTENEDOR GLOBAL -->
+      <div class="contenedor-global" >
+        <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LOS ESTUDIANTES -->
+        <div id="contenedor-estudiantes">
+          <!-- LISTADO DE ESTUDIANTES -->
+          <table class="" id='tablaEstudiantes' style="display: none;">
+            <tr>
+                <th>NOMBRES</th>
+                <th>APELLIDOS</th>
+                <th>CODIGO</th>
+                <th>GESTIONAR</th>
+            </tr>
+            <tbody id="cuerpoTablaEstudiantes">
+            </tbody>
+          </table>
+          <!-- REGISTRO DE ESTUDIANTES -->
+          <form id="aggEstudiante" style="display: none;">
             <div class="form-group">
               <label for="nombres">Nombres</label>
               <input type="text" class="form-control" id="nombres" placeholder="Ingrese nombres" required pattern="\S(.*\S)?">
@@ -72,43 +55,126 @@
               <br>
             </div>
             <button type="button" class="btn btn-success" onclick="agregarEstudiante()">Registrar</button>
-        </form>
-        <form id="aggCurso" style="display: none;">
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Cálculo Integral" required pattern="\S(.*\S)?">
-            <br>
-            <label for="tipoCurso">Tipo de curso</label>
-            <select name="tipoCurso" id="tipoCurso">
-              <option value="Teórico">Teórico</option>
-              <option value="Teórico-Práctico">Teórico-Práctico</option>
-            </select>
-            <br><br>
-            <label for="creditos">Número de créditos</label>
-            <select name="creditos" id="creditos">
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-            <br><br>
-          </div>
-          <button type="button" class="btn btn-success" onclick="agregarCurso()">Registrar</button>
-        </form>
-        <form id="aggMatricula" style="display: none;">
-          <div class="form-group">
-            <select name="listaEstudiantes" id="listaEstudiantes" >
-            </select>
-            <select name="listaCursos" id="listaCursos">
-            </select>
-            <div id="notas"></div>
-          </div>
-          <button type="button" class="btn btn-success" onclick="agregarMatricula()">Registrar</button>
-        </form>
+          </form>
+          <!-- EDITAR ESTUDIANTE -->
+          <div class="modal micromodal-slide" id="openEdit" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+              <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header" >
+                  <h2 class="centerDiv">Ingrese la información</h2>
+                  <button class="modal__close" aria-label="Close modal" data-custom-close="modal-1" ></button>
+                </header>
+                <div class="modal-content-content" id="modal-1-content">
+                    <div class="modal__content">
+                        <div class="row" width="70%" >
+                            <div class="col" align="center">
+                              <label for="id" class="form-label">NOMBRES</label>
+                              <input type="number" class="form-control" id="id" placeholder="0">
+                            </div>
+                            <div class="col" align="center">
+                              <label for="cedula" class="form-label">APELLIDOS</label>
+                              <input type="number" class="form-control" id="cedula" placeholder="0">
+                            </div>
+                            <div class="col" align="center">
+                              <label for="nombre" class="form-label">CÓDIGO</label>
+                              <input type="text" class="form-control" id="nombre" placeholder="nombre">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal__footer" align="center">
+                  <button class="modal__btn" style="background-color: #ff9800" id= "btnActualizar" onclick="modificarEstudiante()">Modificar</button>
+                  <button class="modal__btn" data-custom-close="modal-1" aria-label="Cerrar" id="modalClose">Cerrar</button>
+                </footer>
+              </div>
+            </div>
+        </div>
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="js/gestiones.js"></script>
+        
+        <script>
+            try {
+                MicroModal.init({
+                awaitOpenAnimation: true,
+                awaitCloseAnimation: true,// set to false, to remove close animation
+                disableFocus: false,
+                openTrigger: 'data-custom-open', // [3]
+                closeTrigger: 'data-custom-close', // [4]
+                onShow: function(modal) {console.log("micromodal open");},
+                onClose: function(modal) {console.log("micromodal close");}
+            });
+        
+            } catch (e) {
+            console.log("micromodal error: ", e);
+            }
+        </script>
+        <button style="margin: 10px; display: none;" class="btn btn-success" id="btnRegistroEst" onclick="verRegistroEstud()">Agregar estudiantes</button>
+        </div>
+        <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LOS CURSOS -->
+        <div id="contenedor-cursos">
+          <table class="" id="tablaCursos" style="display: none;">
+            <tr>
+                <th>NOMBRE</th>
+                <th>TIPO</th>
+                <th>CRÉDITOS</th>
+                <th>GESTIONAR</th>
+            </tr>
+            <tbody id="cuerpoTablaCursos">
+            </tbody>
+          </table>
+          <form id="aggCurso" style="display: none;">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombreCurso" required pattern="\S(.*\S)?">
+              <br>
+              <label for="tipoCurso">Tipo de curso</label>
+              <select name="tipoCurso" id="tipoCurso">
+                <option value="Teórico">Teórico</option>
+                <option value="Teórico-Práctico">Teórico-Práctico</option>
+              </select>
+              <br><br>
+              <label for="creditos">Número de créditos</label>
+              <select name="creditos" id="creditos">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              <br><br>
+            </div>
+            <button type="button" class="btn btn-success" onclick="agregarCurso()">Registrar</button>
+          </form>
+          <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroCurso" onclick="verRegistroCurso()">Agregar Cursos</button>
+        </div>
+        <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LAS MATRICULAS -->
+        <div id="contenedor-matriculas">
+          <table class="" id="tablaMatriculas" style="display: none;">
+            <tr>
+                <th>ESTUDIANTE</th>
+                <th>CURSO</th>
+                <th>NOTAS</th>
+                <th>NOTA FINAL</th>
+                <th>GESTIONAR</th>
+            </tr>
+            <tbody id="cuerpoTablaMatriculas">
+            </tbody>
+          </table>
+          <form id="aggMatricula" style="display: none;">
+            <div class="form-group">
+              <select name="listaEstudiantes" id="listaEstudiantes" >
+              </select>
+              <select name="listaCursos" id="listaCursos">
+              </select>
+              <div id="notas"></div>
+            </div>
+            <button type="button" class="btn btn-success" onclick="agregarMatricula()">Registrar</button>
+          </form>
+          <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroMat" onclick="verRegistroMatricula()">Agregar Matricula</button>
+        </div>
       </div>
-      <footer>
-          
-      </footer>
-    
+      <footer></footer>
     </div>
   </body>
 </html>
-  

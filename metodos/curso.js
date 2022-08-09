@@ -23,12 +23,12 @@ router.get('/', (request, response) => {
 
 //Obtener curso
 router.post('/consulta', (request, response) => {
-    response.send(consultarDatos(cursos,request.body,atrCurs));
+    response.send(consultarDatos(cursos,request.body,atrCursO));
 })
 
 //Eliminar curso
 router.delete('/', (request, response) => {
-    listaModificada = eliminarDatos(cursos,request.body,atrCurs);
+    listaModificada = eliminarDatos(cursos,request.body,atrCursO);
     if(listaModificada != []){
         cursos = listaModificada;
         response.status(requestOk).end();
@@ -47,7 +47,7 @@ router.post('/',(request,response) => {
         }
     });
     //agreagar dato
-    if(agregarDato(cursos,crearCurs(request.body),atrCurs)){
+    if(agregarDato(cursos,crearCurs(request.body),atrCursO)){
         response.status(requestOk).end();
     }
     guardar(cursos,rutaCurs);
@@ -60,7 +60,7 @@ router.put('/', (request, response) => {
     valores = Object.values(request.body)
     remplazado = valores.shift()
     remplazo = valores.shift()
-    listaModificada = modificarDatos(cursos, remplazado, remplazo, atrCurs);
+    listaModificada = modificarDatos(cursos, remplazado, remplazo, atrCursO);
     if(listaModificada != []){
         cursos = listaModificada;
         response.status(requestOk).end();
@@ -80,8 +80,7 @@ function crearCurs(cuerpoPet){
     return {
         "nombre" : cuerpoPet.nombre,
         "tipo" : cuerpoPet.tipo,
-        "creditos" : cuerpoPet.creditos,
-        "nota grupal" : 0
+        "creditos" : cuerpoPet.creditos
     }
 }
 

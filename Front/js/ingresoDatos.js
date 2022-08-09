@@ -22,6 +22,7 @@ function agregarEstudiante(){
             contentType: 'application/json',
             success: function (response) {
                 alert("Estudiante agregado")
+                verEstudiantes();
             },
             error: function (xhr, status) {
                 alert("No se pudo agregar al estudiante")
@@ -30,33 +31,29 @@ function agregarEstudiante(){
     }
 }
 function agregarCurso(){
-    if($("#nombre").val()==""){
-        alert("Todos los campos son obligatorios");
-    }
-    else{
-        let nombre = $("#nombre").val();
-        let tipo = $("#tipoCurso").val();
-        let creditos = $("#creditos").val();
+    let nombre = $("#nombreCurso").val();
+    console.log(nombre);
+    let tipo = $("#tipoCurso").val();
+    let creditos = $("#creditos").val();
+    var data = {
+        nombre:nombre,
+        tipo:tipo,
+        creditos:creditos
+    };
+    console.log(JSON.stringify(data));
 
-        var data = {
-            nombre:nombre,
-            tipo:tipo,
-            creditos:creditos
-        };
-
-        $.ajax({
-            url: url+"/cursos",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function (response) {
-                alert("Curso agregado")
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("No se pudo agregar el curso")
-            }
-        });
-    }
+    $.ajax({
+        url: url+"/cursos",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function (response) {
+            alert("Curso agregado")
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("No se pudo agregar el curso")
+        }
+    });
 }
 const tamanoConst = function tamano(){
     let div = document.getElementById('notas');
@@ -84,7 +81,6 @@ function agregarMatricula() {
             curso:curso,
             notas:notas
         };
-        console.log("Dataplus"+JSON.stringify(data));
         $.ajax({
             url: url+"/matriculas",
             type: "POST",
@@ -106,4 +102,19 @@ function limpiar(){
     $("#codigo").val("");
 }
 
+// function editar(nombres, apellidos, codigo){
+//     console.log(nombre);
+//     document.getElementById("openEdit").click();
+
+//     $("#buttonActualizar").show();
+//     $("#buttonCrear").hide();
+
+//     $("#nombres").val(""+nombres+"");
+//     document.getElementById("id").disabled = true;
+//     $("#cedula").val(""+cedula+"");
+//     $("#nombre").val(""+nombre+"");
+//     $("#apellido").val(""+apellido+"");
+//     $("#correo").val(""+correo+"");
+//     $("#telefono").val(""+telefono+"");
+// }
 //let notaFinal = notaUno*0.35 + notaDos*0.35 + notaTres*0.30;
