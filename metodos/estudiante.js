@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {cargar,guardar} = require("./funciones/persistencia");
-const {agregarDato, eliminarDatos, modificarDatos} = require("./funciones/manipulacion");
-const {consultarDatos,consultarDatosFunc} = require("./funciones/consulta");
+const {cargar,guardar} = require("./funciones/base/persistencia");
+const {agregarDato, eliminarDatos, modificarDatos} = require("./funciones/base/manipulacion");
+const {consultarDatos,consultarDatosFunc} = require("./funciones/base/consulta");
+const funcMatr = require("./funciones/funcMatr");
+const funcEst = require("./funciones/funcEst");
 const requestOk = 200;
 const requestFailed = 400;
 const rutaEst = "./archivos/estudiantes.json";
@@ -10,50 +12,64 @@ const atrEst = ["nombres","apellidos","codigo","promedio"]
 const atrEstModf = ["nombres","apellidos"]
 const atrEstO = ["nombres","apellidos","codigo"]
 
-
-let estudiantes;
-
-router.use(function (req, res, next) {
-    if(estudiantes == null){estudiantes = cargar(rutaEst)}
-    next();
-})
-
 //Obtener estudiantes
 router.get('/', (request, response) => {
-    response.send(estudiantes);
+    response.send(funcEst.estudiantes);
 })
 
 //Obtener estudiante
 router.get('/consulta', (request, response) => {
-    response.send(consultarDatos(estudiantes,request.body,atrEst));
+    response.send(consultarDatos(funcEst.estudiantes,request.body,atrEst));
 })
 
 //Eliminar estudiante
 router.delete('/', (request, response) => {
-    listaModificada = eliminarDatos(estudiantes,request.body,atrEst);
-    if(listaModificada != []){
-        estudiantes = listaModificada;
+    console.log(funcEst.estudiantes);
+    let estudiantesB = consultarDatos(funcEst.estudiantes,request.body,atrEst);
+    let auxMatr = funcMatr.matriculas;
+    console.log("Estudaintes: ",estudiantesB);
+    estudiantesB.forEach(cursoB => {
+        let matriculaB = {
+            estudiante: cursoB.codigo
+        }
+        auxMatr = funcMatr.borrar(auxMatr,matriculaB);
+        if(auxMatr == []) { 
+            response.status(requestFailed).end();
+            return;
+        }
+    });
+    listaModificada = eliminarDatos(funcEst.estudiantes,request.body,atrEst);
+    
+    if(listaModificada != [] && auxMatr != []){
+        funcEst.estudiantes = listaModificada;
+        funcMatr.matriculas = auxMatr;
         response.status(requestOk).end();
     }
-    guardar(estudiantes,rutaEst);
+    funcMatr.guardar()
+    funcEst.guardar();
     response.status(requestFailed).end();
 })
 
 //Agregar estudiante
 router.post('/',(request,response) => {
     //comprobacion de que el codigo no este repetido
-    estudiantes.forEach(estudiante => {
+    let repetido = false;
+    funcEst.estudiantes.forEach(estudiante => {
         if(estudiante.codigo == request.body.codigo) {
+            repetido = true;
             response.status(requestFailed).end();
             return;
         }
     });
-    
+    if(repetido) return;
+
     //agreagar dato
-    if(agregarDato(estudiantes,crearEst(request.body),atrEst)){
+    console.log("1",request.body);
+    console.log("2",crearEst(request.body));
+    if(agregarDato(funcEst.estudiantes,crearEst(request.body),atrEst)){
+        funcEst.guardar();
         response.status(requestOk).end();
     }
-    guardar(estudiantes,rutaEst);
     response.status(requestFailed).end();
 })
 
@@ -63,12 +79,14 @@ router.put('/', (request, response) => {
     valores = Object.values(request.body)
     remplazado = valores.shift()
     remplazo = valores.shift()
-    listaModificada = modificarDatos(estudiantes, remplazado, remplazo, atrEst);
-    if(listaModificada != []){
-        estudiantes = listaModificada;
+    listaModificada = modificarDatos(funcEst.estudiantes, remplazado, remplazo, atrEst,["nombres","apellidos"]);
+    console.log("listaModificada ",listaModificada)
+    if(listaModificada.length != 0 ){
+        funcEst.estudiantes = listaModificada;
         response.status(requestOk).end();
+        funcEst.guardar();
+        return;
     }
-    guardar(estudiantes,rutaEst);
     response.status(requestFailed).end();
 })
 
@@ -80,7 +98,7 @@ function crearEst(cuerpoPet){
     for (const key in cuerpoPet) {
         if(!atrEstO.includes(key) || cuerpoPet[key] == null) return {};
     }
-
+    console.log("cuerpo",cuerpoPet);
     return {
         "nombres" : cuerpoPet.nombres,
         "apellidos" : cuerpoPet.apellidos,

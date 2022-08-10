@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/reportes.js"></script>
     <script src="js/ingresoDatos.js"></script>
+    <script src="js/gestiones.js"></script>
     <link rel="stylesheet" href="css/modal.css">
   </head>
   <body>
@@ -54,71 +55,86 @@
               <input type="text" class="form-control" id="codigo" placeholder="Ingrese código">
               <br>
             </div>
-            <button type="button" class="btn btn-success" onclick="agregarEstudiante()">Registrar</button>
-          </form>
-          <!-- EDITAR ESTUDIANTE -->
-        </div>
-        <button style="margin: 10px; display: none;" class="btn btn-success" id="btnRegistroEst" onclick="verRegistroEstud()">Agregar estudiantes</button>
-        </div>
-        <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LOS CURSOS -->
-        <div id="contenedor-cursos">
-          <table class="" id="tablaCursos" style="display: none;">
-            <tr>
-                <th>NOMBRE</th>
-                <th>TIPO</th>
-                <th>CRÉDITOS</th>
-                <th>GESTIONAR</th>
-            </tr>
-            <tbody id="cuerpoTablaCursos">
-            </tbody>
-          </table>
-          <form id="aggCurso" style="display: none;">
-            <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="text" class="form-control" id="nombreCurso" required pattern="\S(.*\S)?">
-              <br>
-              <label for="tipoCurso">Tipo de curso</label>
-              <select name="tipoCurso" id="tipoCurso">
-                <option value="Teórico">Teórico</option>
-                <option value="Teórico-Práctico">Teórico-Práctico</option>
-              </select>
-              <br><br>
-              <label for="creditos">Número de créditos</label>
-              <select name="creditos" id="creditos">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-              <br><br>
+            <div class="d-flex justify-content-center">
+              <button type="button" class="btn btn-success" onclick="actualizarEstudiante()" id="botonEditarEstudiante" style="display: none;">Guardar edición</button>
+              <button type="button" class="btn btn-success" onclick="agregarEstudiante()" id="botonAgregarEstudiante" style="display: none;">Registrar</button>
             </div>
-            <button type="button" class="btn btn-success" onclick="agregarCurso()">Registrar</button>
           </form>
-          <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroCurso" onclick="verRegistroCurso()">Agregar Cursos</button>
+        </div>
+        <button style="margin: 10px; display: none;" class="btn btn-success" id="btnRegistroEst" onclick="verFormEstudiante(0)">Agregar estudiantes</button>
+        </div>
+
+
+        <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LOS CURSOS -->
+        <div class="contenedor-global" >
+          <div id="contenedor-cursos">
+            <table class="" id="tablaCursos" style="display: none;">
+              <tr>
+                  <th>NOMBRE</th>
+                  <th>TIPO</th>
+                  <th>CRÉDITOS</th>
+                  <th>GESTIONAR</th>
+              </tr>
+              <tbody id="cuerpoTablaCursos">
+              </tbody>
+            </table>
+            <!-- FORM PARA AGREGAR CURSO -->
+            <form id="aggCurso" style="display: none;">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombreCurso" required pattern="\S(.*\S)?">
+                <br>
+                <label for="tipoCurso">Tipo de curso</label>
+                <select name="tipoCurso" id="tipoCurso">
+                  <option value="Teórico">Teórico</option>
+                  <option value="Teórico-Práctico">Teórico-Práctico</option>
+                </select>
+                <br><br>
+                <label for="creditos">Número de créditos</label>
+                <select name="creditos" id="creditos">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <br><br>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-success" onclick="agregarCurso()" id="botonAgregarCurso" style="display: none;">Registrar</button>
+                <button type="button" class="btn btn-success" onclick="actualizarCurso()" id="botonEditarCurso" style="display: none;">Guardar edición</button>
+              </div>
+            </form>
+            <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroCurso" onclick="verFormCurso(0)">Agregar Cursos</button>
+          </div>
         </div>
         <!-- EN ESTE CONTENEDOR IRÁ LA INFORMACIÓN DE LAS MATRICULAS -->
-        <div id="contenedor-matriculas">
-          <table class="" id="tablaMatriculas" style="display: none;">
-            <tr>
-                <th>ESTUDIANTE</th>
-                <th>CURSO</th>
-                <th>NOTAS</th>
-                <th>NOTA FINAL</th>
-                <th>GESTIONAR</th>
-            </tr>
-            <tbody id="cuerpoTablaMatriculas">
-            </tbody>
-          </table>
-          <form id="aggMatricula" style="display: none;">
-            <div class="form-group">
-              <select name="listaEstudiantes" id="listaEstudiantes" >
-              </select>
-              <select name="listaCursos" id="listaCursos">
-              </select>
-              <div id="notas"></div>
-            </div>
-            <button type="button" class="btn btn-success" onclick="agregarMatricula()">Registrar</button>
-          </form>
-          <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroMat" onclick="verRegistroMatricula()">Agregar Matricula</button>
+        <div class="contenedor-global" >
+          <div id="contenedor-matriculas">
+            <table class="" id="tablaMatriculas" style="display: none;">
+              <tr>
+                  <th>ESTUDIANTE</th>
+                  <th>CURSO</th>
+                  <th>NOTAS</th>
+                  <th>NOTA FINAL</th>
+                  <th>GESTIONAR</th>
+              </tr>
+              <tbody id="cuerpoTablaMatriculas">
+              </tbody>
+            </table>
+            <form id="aggMatricula" style="display: none;">
+              <div class="form-group">
+                <select name="listaEstudiantes" id="listaEstudiantes" >
+                </select>
+                <select name="listaCursos" id="listaCursos">
+                </select>
+                <div id="notas" style="margin: 2em;"></div>
+              </div>
+              <div class="d-flex justify-content-center" style="margin: 2em;">
+                <button type="button" class="btn btn-success" onclick="agregarMatricula()" id="botonAgregarMatricula" style="display: none;">Registrar</button>
+                <button type="button" class="btn btn-success" onclick="actualizarMatricula()" id="botonEditarMatricula" style="display: none;">Guardar edición</button>
+              </div>
+            </form>
+            <button style="margin: 10px;display: none;" class="btn btn-success" id="btnRegistroMat" onclick="verFormMatricula(0)">Agregar Matricula</button>
+          </div>
         </div>
       </div>
       <footer></footer>

@@ -15,13 +15,13 @@ function verEstudiantes(){
         $('#cuerpoTablaEstudiantes').empty();
         $.each(data, function (key, value) {
             $('#cuerpoTablaEstudiantes').append(
-                '<tr>'+
-                    '<td>' +value.nombres + '</td>'+
-                    '<td>' +value.apellidos + '</td>'+
-                    '<td>' +value.codigo + '</td>'+
-                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editarEstudiante('+value.nombres+','+value.apellidos+','+value.codigo+')>Editar</button>'+
-                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarEstudiante('+value.codigo+')>Eliminar</button>'+'</td>'+
-                '</tr>'
+                `<tr>
+                    <td>${value.nombres}</td>
+                    <td>${value.apellidos}</td>
+                    <td>${value.codigo}</td>
+                    <td><button type="button" class="btn btn-secondary" onclick="verFormEstudiante(1,'${value.nombres}','${value.apellidos}','${value.codigo}')">Editar</button>
+                    <button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick="eliminarEstudiante('${value.codigo}')">Eliminar</button></td>
+                </tr>`
             ); 
         });
     });
@@ -43,13 +43,13 @@ function verCursos(){
         $('#cuerpoTablaCursos').empty();
         $.each(data, function (key, value) {
             $('#cuerpoTablaCursos').append(
-                '<tr>'+
-                    '<td>' +value.nombre + '</td>'+
-                    '<td>' +value.tipo + '</td>'+
-                    '<td>' +value.creditos + '</td>'+
-                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editar('+value.nombre+','+value.tipo+','+value.creditos+')>Editar</button>'+
-                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarCurso('+value.nombre+')>Eliminar</button>'+'</td>'+
-                '</tr>'
+                `<tr>
+                    <td>${value.nombre}</td>
+                    <td>${value.tipo}</td>
+                    <td>${value.creditos}</td>
+                    <td><button type="button" class="btn btn-secondary" onclick="verFormCurso(1,'${value.nombre}','${value.tipo}',${value.creditos})">Editar</button>
+                    <button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick="eliminarCurso('${value.nombre}')">Eliminar</button></td>
+                </tr>`
             ); 
         });
     });
@@ -70,20 +70,22 @@ function verMatriculas(){
         $('#cuerpoTablaMatriculas').empty();
         $.each(data, function (key,value) {
             $('#cuerpoTablaMatriculas').append(
-                '<tr>'+
-                    '<td>' +value.estudiante + '</td>'+
-                    '<td>' +value.curso + '</td>'+
-                    '<td>' +JSON.stringify(value.notas) + '</td>'+
-                    '<td>' +value.notaFinal + '</td>'+
-                    '<td>'+'<button type="button" class="btn btn-secondary" onclick=editar('+value.nombres+','+value.apellidos+','+value.codigo+')>Editar</button>'+
-                    '<button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick=eliminarMatricula('+value.codigo+')>Eliminar</button>'+'</td>'+
-                '</tr>'
+                `<tr>
+                    <td>${value.estudiante}</td>
+                    <td>${value.curso}</td>
+                    <td>${JSON.stringify(value.notas)}</td>
+                    <td>${value.notaFinal}</td>
+                    <td><button type="button" class="btn btn-secondary" onclick="verFormMatricula(1,${value.estudiante},'${value.curso}','${value.notas}')">Editar</button>
+                    <button type="button" class="btn btn-danger" style="margin-left: 5px;" onclick="eliminarMatricula('${value.estudiante}','${value.curso}')">Eliminar</button></td>
+                </tr>`
             ); 
         });
     });
   });
 }
-function verRegistroEstud(){
+
+// 0 es registro para guardar y 1 es registro para editar
+function verFormEstudiante(accion, nombres, apellidos, codigo){
     $("#tablaCursos").hide();
     $("#tablaEstudiantes").hide();
     $("#aggCurso").hide();
@@ -91,17 +93,40 @@ function verRegistroEstud(){
     $("#aggMatricula").hide();
     $("#btnRegistroEst").hide();
     $("#aggEstudiante").show();
+    if(accion == 0){
+        $("#botonAgregarEstudiante").show();
+        $("#botonEditarEstudiante").hide();
+    }
+    else if(accion == 1){
+        $("#botonAgregarEstudiante").hide();
+        $("#botonEditarEstudiante").show();
+        editarEstudiante(nombres, apellidos, codigo);
+    }
 }
-function verRegistroCurso(){
+
+
+
+// 0 es registro para guardar y 1 es registro para editar
+function verFormCurso(accion, nombre, tipo, creditos){
     $("#btnRegistroCurso").hide();
     $("#tablaCursos").hide();
     $("#tablaEstudiantes").hide();
-    $("#aggEstudiante").hide();
     $("#tablaMatriculas").hide();
+    $("#aggEstudiante").hide();
     $("#aggMatricula").hide();
     $("#aggCurso").show();
+    if(accion == 0){
+        $("#botonAgregarCurso").show();
+        $("#botonEditarCurso").hide();
+    }
+    else if(accion == 1){
+        $("#botonAgregarCurso").hide();
+        $("#botonEditarCurso").show();
+        editarCurso(nombre, tipo, creditos);
+    }
+    
 }
-function verRegistroMatricula(){
+function verFormMatricula(accion, estudiante, curso, notas){
     $("#tablaCursos").hide();
     $("#tablaEstudiantes").hide();
     $("#aggEstudiante").hide();
@@ -111,6 +136,16 @@ function verRegistroMatricula(){
     $("#aggMatricula").show();
     selectEstudiantes();
     selectCursos();
+    if(accion == 0){
+        $("#botonAgregarMatricula").show();
+        $("#botonEditarMatricula").hide();
+    }
+    else if(accion == 1){
+        $("#botonAgregarMatricula").hide();
+        $("#botonEditarMatricula").show();
+        //console.log(estudiante, curso, notas);
+        editarMatricula(estudiante, curso, notas);
+    }
 
 }
 // Listas Desplegables

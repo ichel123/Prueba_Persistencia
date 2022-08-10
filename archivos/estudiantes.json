@@ -1,43 +1,68 @@
 [
   {
-    "nombres": "Nami",
-    "apellidos": "Delgado Barbosa",
-    "codigo": "20202020010"
-  },
-  {
-    "nombres": "Mitsu",
-    "apellidos": "Barbosa",
-    "codigo": "20202020002"
-  },
-  {
-    "nombres": "Leia",
-    "apellidos": "Barbosa",
-    "codigo": "20202020005"
-  },
-  {
-    "nombres": "Nicolás",
-    "apellidos": "Sabogal Velásquez",
-    "codigo": "20202020008"
-  },
-  {
-    "nombres": "Andrea",
-    "apellidos": "Morales",
-    "codigo": "20202020000"
-  },
-  {
-    "nombres": "Lucia",
-    "apellidos": "Hernández",
-    "codigo": "20202020065"
-  },
-  {
-    "nombres": "Sofía",
-    "apellidos": "Gómez",
-    "codigo": "20202020011"
-  },
-  {
     "nombres": "Juan David",
     "apellidos": "Olmos Corredor",
     "codigo": "20202020004",
     "promedio": 0
+  },
+  {
+    "nombres": "Sebastian",
+    "apellidos": "Garavito Camacho",
+    "codigo": "202020200018",
+    "promedio": 0
+  },
+  {
+    "nombres": "Sebastian",
+    "apellidos": "Garavito Camacho",
+    "codigo": "202020200019",
+    "promedio": 0
+  },
+  {
+    "nombres": "Ichel Alejandra",
+    "apellidos": "Delgado",
+    "codigo": "202020200015",
+    "promedio": 0
+  },
+  {
+    "nombres": "Nicolas Daivd",
+    "apellidos": "Sabogal Velazques",
+    "codigo": "20202020008",
+    "promedio": 0
+  },
+  {
+    "nombres": "NPC 1",
+    "apellidos": "no necesita",
+    "codigo": "1",
+    "promedio": 2.3
+  },
+  {
+    "nombres": "NPC 2",
+    "apellidos": "no necesita",
+    "codigo": "2",
+    "promedio": 0
+  },
+  {
+    "nombres": "NPC 3",
+    "apellidos": "no necesita",
+    "codigo": "3",
+    "promedio": 0
+  },
+  {
+    "nombres": "NPC 4",
+    "apellidos": "no necesita",
+    "codigo": "4",
+    "promedio": 0
+  },
+  {
+    "nombres": "NPC 5",
+    "apellidos": "no necesita",
+    "codigo": "5",
+    "promedio": 0
+  },
+  {
+    "nombres": "Estudiante",
+    "apellidos": "Estudioso",
+    "codigo": "1515",
+    "promedio": 3.05
   }
 ]

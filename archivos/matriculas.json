@@ -1,54 +1,195 @@
 [
   {
-    "estudiante": "20202020000",
-    "curso": "Matemáticas",
+    "estudiante": "1",
+    "curso": "quimica",
     "notas": [
-      "3.3",
-      "3.5",
-      "2.6"
+      "1",
+      "1",
+      "2",
+      "3"
     ],
-    "notaFinal": "3.2"
+    "notaFinal": 1.7
   },
   {
-    "estudiante": "20202020005",
-    "curso": "Fund. de Bases de Datos",
+    "estudiante": "1",
+    "curso": "fisica",
+    "notas": [
+      "4",
+      "1",
+      "2",
+      "3"
+    ],
+    "notaFinal": 2.6
+  },
+  {
+    "estudiante": "1",
+    "curso": "Calculo",
+    "notas": [
+      "4",
+      "3",
+      "2"
+    ],
+    "notaFinal": 3.05
+  },
+  {
+    "estudiante": "1",
+    "curso": "programación",
+    "notas": [
+      "2.5",
+      "1.0",
+      "0.5",
+      "3"
+    ],
+    "notaFinal": 1.85
+  },
+  {
+    "estudiante": "2",
+    "curso": "quimica",
+    "notas": [
+      "1",
+      "1",
+      "2",
+      "3"
+    ],
+    "notaFinal": 1.7
+  },
+  {
+    "estudiante": "2",
+    "curso": "fisica",
+    "notas": [
+      "4",
+      "1",
+      "2",
+      "3"
+    ],
+    "notaFinal": 2.6
+  },
+  {
+    "estudiante": "2",
+    "curso": "programación",
+    "notas": [
+      "2.5",
+      "1.0",
+      "0.5",
+      "3"
+    ],
+    "notaFinal": 1.85
+  },
+  {
+    "estudiante": "3",
+    "curso": "quimica",
+    "notas": [
+      "1",
+      "1",
+      "2",
+      "3"
+    ],
+    "notaFinal": 1.7
+  },
+  {
+    "estudiante": "3",
+    "curso": "fisica",
     "notas": [
       "3",
+      "1",
+      "2",
+      "3"
+    ],
+    "notaFinal": 2.6
+  },
+  {
+    "estudiante": "3",
+    "curso": "Calculo",
+    "notas": [
+      "4",
+      "3",
+      "2"
+    ],
+    "notaFinal": 3.05
+  },
+  {
+    "estudiante": "3",
+    "curso": "programación",
+    "notas": [
+      "2.5",
+      "1.0",
+      "5",
+      "3"
+    ],
+    "notaFinal": 1.85
+  },
+  {
+    "estudiante": "4",
+    "curso": "quimica",
+    "notas": [
+      "1",
       "4",
       "2",
-      "3.4"
+      "3"
     ],
-    "notaFinal": "3.15"
+    "notaFinal": 1.7
   },
   {
-    "estudiante": "20202020002",
-    "curso": "Matemáticas",
+    "estudiante": "4",
+    "curso": "fisica",
     "notas": [
-      "2.9",
-      "3.1",
-      "3.6"
+      "4",
+      "5",
+      "2",
+      "3"
     ],
-    "notaFinal": "3.18"
+    "notaFinal": 2.6
   },
   {
-    "estudiante": "20202020008",
-    "curso": "Lógica",
+    "estudiante": "4",
+    "curso": "Calculo",
     "notas": [
-      "3.8",
-      "3.5",
-      "3.4"
+      "4",
+      "3",
+      "4"
     ],
-    "notaFinal": "3.57"
+    "notaFinal": 3.05
   },
   {
-    "estudiante": "20202020008",
-    "curso": "Programación Avanzada",
+    "estudiante": "5",
+    "curso": "quimica",
     "notas": [
-      "4.4",
+      "4",
+      "4",
+      "2",
+      "3"
+    ],
+    "notaFinal": 1.7
+  },
+  {
+    "estudiante": "5",
+    "curso": "Calculo",
+    "notas": [
+      "4",
+      "3",
+      "2"
+    ],
+    "notaFinal": 3.05
+  },
+  {
+    "estudiante": "5",
+    "curso": "programación",
+    "notas": [
       "2.5",
-      "3.5",
-      "3.4"
+      "1.0",
+      "0.5",
+      "3"
     ],
-    "notaFinal": "3.50"
+    "notaFinal": 1.85
+  },
+  {
+    "estudiante": "1515",
+    "curso": "algebra",
+    "notas": [
+      "4",
+      "2.3",
+      "2.8"
+    ],
+    "notaFinal": 3.05
   }
 ]

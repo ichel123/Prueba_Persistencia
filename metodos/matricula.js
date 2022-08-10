@@ -1,70 +1,112 @@
 const express = require('express');
 const router = express.Router();
-const {cargar,guardar} = require("./funciones/persistencia");
-const {agregarDato} = require("./funciones/manipulacion");
-const {consultarDatos,consultarDatosFunc} = require("./funciones/consulta");
+const {cargar,guardar} = require("./funciones/base/persistencia");
+const {agregarDato,eliminarDatos,modificarDatos} = require("./funciones/base/manipulacion");
+const {consultarDatos,consultarDatosFunc} = require("./funciones/base/consulta");
+const funcCurs = require("./funciones/funcCurs");
+const funcMatr = require("./funciones/funcMatr");
+const funcEst = require("./funciones/funcEst");
+const { json } = require('body-parser');
 const requestOk = 200;
 const requestFailed = 400;
 const rutaMatr = "./archivos/matriculas.json";
 const atrMatr = ["estudiante","curso","notas","notaFinal"]
 const atrMatrO = ["estudiante","curso","notas"]
-
-
-let matriculas;
-
-router.use(function (req, res, next) {
-    if(matriculas == null){matriculas = cargar(rutaMatr)}
-    next();
-})
+const atrMatrModf = ["notas"]
 
 //Obtener matriculas
 router.get('/', (request, response) => {
-    response.send(matriculas);
+    response.send(funcMatr.matriculas);
 })
 
 //Obtener matricula
 router.get('/consulta', (request, response) => {
-    response.send(consultarDatos(matriculas,request.body,atrMatr));
+    response.send(consultarDatos(funcMatr.matriculas,request.body,atrMatr));
 })
 
-//Obtener matricula
-router.get('/mejorProm', (request, response) => {
-    response.send(matriculas);
+
+//Agregar matricula
+router.post('/',(request,response) => {
+    let cuerpoPet = request.body
+    //comprobacion de que el codigo no este repetido
+    let repetido = false;
+    funcMatr.matriculas.forEach(matricula => {
+        if(matricula.estudiante == cuerpoPet.estudiante &&
+            matricula.curso == cuerpoPet.curso) {
+            response.status(requestFailed).end();
+            repetido = true;
+            return;
+        }
+    });
+    if(repetido) return;
+    
+    //comprueba de que el estudiante y el curso existan
+    if(funcCurs.consultar({nombre: cuerpoPet.curso}).length == 0
+    || funcEst.consultar({codigo: cuerpoPet.estudiante}).length == 0){
+        response.status(requestFailed).end();
+        return;
+    }
+
+    //agreagar dato
+    if(agregarDato(funcMatr.matriculas,crearMatr(cuerpoPet),atrMatr)){
+        //actualizando promedio del estudiante
+        actPromedio(cuerpoPet.estudiante);
+
+        funcEst.guardar();
+        funcMatr.guardar();
+        response.status(requestOk).end();
+    }
+
+    response.status(requestFailed).end();
 })
 
 //Eliminar matricula
 router.delete('/', (request, response) => {
-    listaModificada = eliminarDatos(matriculas,request.body,atrMatrO);
-    if(listaModificada != []){
+    listaModificada = eliminarDatos(matriculas,request.body,atrMatr);
+    if(listaModificada.length > 0){
         matriculas = listaModificada;
         response.status(requestOk).end();
+        guardar(matriculas,rutaMatr);
     }
-    guardar(cursos,rutaCurs);
     response.status(requestFailed).end();
 })
 
-//Agregar matricula
-router.post('/',(request,response) => {
-    let existe = false;
-    //comprobacion de que el codigo no este repetido
-    matriculas.forEach(matricula => {
-        if((matricula.estudiante == request.body.estudiante) && (matricula.curso == request.body.curso)) {
-            response.status(requestFailed).end();
-            existe = true;
-            return;
+//Modificar matricula
+router.put('/', (request, response) => {
+    
+    valores = Object.values(request.body)
+    remplazado = valores.shift()
+    remplazo = valores.shift()
+    let listaModificada = modificarDatos(funcMatr.matriculas, remplazado, remplazo, atrMatr,atrMatrModf);
+
+    listaMod = []
+    for (let index = 0; index < listaModificada.length; index++) {
+        let reg = crearMatr(listaModificada[index])
+        registro = 
+        {
+            "estudiante" : reg.estudiante,
+            "curso" : reg.curso,
+            "notas" : reg.notas,
+            "notaFinal" : reg.notaFinal
         }
-    });
-    if(existe) {
-        return;
+        listaMod.push(registro);
+        console.log("objeto copiado:",registro);
     }
-    //agreagar dato
-    if(agregarDato(matriculas,crearMatr(request.body),atrMatr)){
-        console.log("200");
+
+    console.log(listaMod);
+
+    funcEst.estudiantes.forEach(estudiante => {
+        actPromedio(estudiante.codigo,listaMod);
+    });
+    if(listaMod.length != 0){
+        funcMatr.matriculas = listaMod;
+        funcMatr.guardar();
+        funcEst.guardar();
         response.status(requestOk).end();
     }
-    guardar(matriculas,rutaMatr);
     response.status(requestFailed).end();
 })
+
 
 function crearMatr(cuerpoPet){
 
@@ -73,20 +115,41 @@ function crearMatr(cuerpoPet){
     for (const key in cuerpoPet) {
         if(!atrMatrO.includes(key) || cuerpoPet[key] == null) return {};
     }
-    let notaFinal;
-    if(cuerpoPet.notas.length ==3){
-        notaFinal = cuerpoPet.notas[0]*0.35 + cuerpoPet.notas[1]*0.35 + cuerpoPet.notas[2]*0.30;
-    }
-    else{
-        notaFinal = cuerpoPet.notas[0]*0.30 + cuerpoPet.notas[1]*0.25 + cuerpoPet.notas[2]*0.20 + cuerpoPet.notas[3]*0.25;
-    }
-    console.log("Notas: "+JSON.stringify(cuerpoPet.notas));
+    
+    let notas = [];
+    let definitiva = 0;
+
+    porcentajes = funcCurs.getPorcentajes({nombre: cuerpoPet.curso})
+    porcentajes.forEach(prct => {
+        let nota = cuerpoPet.notas.shift();
+        notas.push(nota);
+        definitiva += nota * prct
+    });
+
+
     return {
         "estudiante" : cuerpoPet.estudiante,
         "curso" : cuerpoPet.curso,
-        "notas" : cuerpoPet.notas,
-        "notaFinal" : notaFinal.toPrecision(3)
+        "notas" : notas,
+        "notaFinal" : Math.round(definitiva*100)/100
     }
 }
 
-module.exports = router
+function actPromedio(codigoEst,lista = funcMatr.matriculas){
+
+    let estudiante = consultarDatos(funcEst.estudiantes,{codigo: codigoEst},["codigo"])[0];
+    let cursos = consultarDatos(lista,{estudiante: codigoEst},["estudiante"]);
+    let creditosTotal = 0;
+    let acumulado = 0;
+    cursos.forEach(curso => {
+        let materia = funcCurs.consultar({nombre: curso.curso});
+        let creditos = parseInt(materia[0].creditos);
+        acumulado += curso.notaFinal * creditos;
+        creditosTotal += creditos;
+    });
+    estudiante.promedio = Math.round(acumulado*100/creditosTotal)/100;
+    if(isNaN(estudiante.promedio)) estudiante.promedio = 0;
+    funcEst.modificar({codigo:estudiante.codigo},estudiante);
+}
+
+module.exports = router;

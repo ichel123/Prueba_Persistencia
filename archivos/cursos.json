@@ -1,32 +1,37 @@
 [
   {
-    "nombre": "Matemáticas",
-    "tipo": "Teórico",
-    "creditos": "2"
-  },
-  {
-    "nombre": "Lógica",
-    "tipo": "Teórico",
-    "creditos": "2"
-  },
-  {
-    "nombre": "Programación Avanzada",
+    "nombre": "quimica",
     "tipo": "Teórico-Práctico",
-    "creditos": "2"
+    "creditos": 3
   },
   {
-    "nombre": "Fund. de Bases de Datos",
+    "nombre": "fisica",
     "tipo": "Teórico-Práctico",
-    "creditos": "2"
+    "creditos": 3
   },
   {
-    "nombre": "Probabilidad",
+    "nombre": "Calculo",
     "tipo": "Teórico",
-    "creditos": "3"
+    "creditos": 3
   },
   {
-    "nombre": "Estadística",
+    "nombre": "algebra",
     "tipo": "Teórico",
+    "creditos": 2
+  },
+  {
+    "nombre": "programación",
+    "tipo": "Teórico-Práctico",
+    "creditos": 3
+  },
+  {
+    "nombre": "grupo JS",
+    "tipo": "Teórico-Práctico",
+    "creditos": 1
+  },
+  {
+    "nombre": "Astrofisca-nuclear",
+    "tipo": "Teórico-Práctico",
     "creditos": "3"
   }
 ]

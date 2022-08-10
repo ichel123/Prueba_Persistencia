@@ -1,5 +1,4 @@
 function consultarDatos(lista, dato, atributos){
-    console.log(JSON.stringify(dato));
     for (const key in dato) {
         if(!atributos.includes(key) || dato[key] == null) return;
     }
